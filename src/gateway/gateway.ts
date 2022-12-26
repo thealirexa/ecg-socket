@@ -8,7 +8,7 @@ import {
 import { Server } from 'socket.io';
 import { EcgDataModel } from './model';
 
-@WebSocketGateway()
+@WebSocketGateway(8231, { cors: true })
 export class EcgGateway implements OnModuleInit {
   @WebSocketServer()
   server: Server;
@@ -20,9 +20,9 @@ export class EcgGateway implements OnModuleInit {
     });
   }
 
-  @SubscribeMessage('newData')
+  @SubscribeMessage('send_data')
   onNewMessage(@MessageBody() body: EcgDataModel) {
     console.log(body);
-    this.server.emit('onNewData', body);
+    this.server.emit('receive_data', body);
   }
 }
