@@ -1,0 +1,9 @@
+kind: ExternalService
+name: ecgsocket
+spec:
+  image_pull_policy: Always
+  port: 80
+  source:
+    context: .
+    node_version: 18.12.1
+    project_type: nodejs

@@ -12,11 +12,13 @@ import { EcgDataModel } from './model';
 export class EcgGateway implements OnModuleInit {
   @WebSocketServer()
   server: Server;
-
   onModuleInit() {
     this.server.on('connection', (socket) => {
-      console.log('socketId ==> ', socket.id);
-      console.log('connected');
+      console.log(`socket connected ${socket.id}`);
+
+      socket.prependAny((eventName, args) => {
+        this.server.emit('receive_data', args);
+      });
     });
   }
 
